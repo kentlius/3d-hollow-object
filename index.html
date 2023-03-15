@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Hollow Object</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <canvas id="canvas" width="360" height="360"></canvas>
+      </div>
+      <div class="tools">
+        <div class="card">
+          <h1>Transformation</h1>
+          <div class="card-content">
+            <div class="card-content-item">
+              <h2>Translation</h2>
+              <label for="x">X</label>
+              <input type="range" id="x" name="x" min="-100" max="100" />
+              <label for="y">Y</label>
+              <input type="range" id="y" name="y" min="-100" max="100" />
+              <label for="z">Z</label>
+              <input type="range" id="z" name="z" min="-100" max="100" />
+            </div>
+            <div class="card-content-item">
+              <h2>Rotation</h2>
+              <label for="x">X</label>
+              <input type="range" id="x" name="x" min="-100" max="100" />
+              <label for="y">Y</label>
+              <input type="range" id="y" name="y" min="-100" max="100" />
+              <label for="z">Z</label>
+              <input type="range" id="z" name="z" min="-100" max="100" />
+            </div>
+            <div class="card-content-item">
+              <h2>Scale</h2>
+              <label for="x">X</label>
+              <input type="range" id="x" name="x" min="-100" max="100" />
+              <label for="y">Y</label>
+              <input type="range" id="y" name="y" min="-100" max="100" />
+              <label for="z">Z</label>
+              <input type="range" id="z" name="z" min="-100" max="100" />
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h1>Camera</h1>
+        </div>
+        <div class="card">
+          <h1>Load Model</h1>
+        </div>
+        <div class="card">
+          <h1>Others</h1>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
