@@ -1,7 +1,6 @@
-import { parseObject, cube} from "./object.js";
+import { parseObject } from "./parse.js";
 
-// TODO : make object parser, (vertices and indices)
-var model = parseObject(cube, true);
+var model = parseObject("../../test/cube.json");
 var translation = [0, 0, 0];
 var rotation = [0, 0, Math.PI / 180 * 30];
 var scale = [1, 1, 1];
@@ -96,6 +95,7 @@ export function draw(gl) {
     gl.uniformMatrix4fv(projection, false, projectionMatrix);
 
     // Bind vertices and indices
+    console.log(model.indices)
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer());
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(model.vertices), gl.STATIC_DRAW);
