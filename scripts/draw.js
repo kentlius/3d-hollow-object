@@ -1,11 +1,14 @@
 import { parseObject } from "./parse.js";
+import { translationMatrix, xRotationMatrix, yRotationMatrix, zRotationMatrix, scaleMatrix } from "./transformation.js";
+import { orthographicMatrix, perspectiveMatrix, obliqueMatrix } from "./projection.js";
+import { multiply, inverse } from "./matrix.js";
 
 var model = parseObject("../../test/cube.json");
 var translation = [0, 0, 0];
-var rotation = [0, 0, Math.PI / 180 * 30];
+var rotation = [Math.PI / 180 * 0, Math.PI / 180 * 15, Math.PI / 180 * 15];
 var scale = [1, 1, 1];
-var viewAngle = 60;
-var viewRadius = 0.1;
+var viewAngle = 30;
+var viewRadius = 0.2;
 var projectionType = "orthographic";
 var baseColor = [0.0, 1.0, 1.0, 1.0];
 
@@ -64,9 +67,10 @@ function createShaderProgram(gl) {
 
 export function draw(gl) {
     // TODO : compute transformationMatrix
-    var transformationMatrix = [0.87,0.5,0,0, -0.5,0.87,0,0, 0,0,1,0, 0,0,0,1];
+    var transformationMatrix = multiply(multiply(multiply(multiply(scaleMatrix(scale), xRotationMatrix(rotation[0])), 
+                                                yRotationMatrix(rotation[1])), zRotationMatrix(rotation[2])), translationMatrix(translation));
     // TODO : compute projectionMatrix
-    var projectionMatrix = [0.44,0,0.5,0.76, -0.25,0.87,-0.44,0, -0.87,0,0.5,0, 0.08,0,-0.05,1];
+    var projectionMatrix = multiply(orthographicMatrix(), inverse(multiply(yRotationMatrix(viewAngle*Math.PI/180), translationMatrix([0, 0, viewRadius]))));
 
     var shaderProgram = createShaderProgram(gl);
 
@@ -88,7 +92,7 @@ export function draw(gl) {
     gl.uniform3f(inputColor, baseColor[0], baseColor[1], baseColor[2]);
 
     if (projectionType === "perspective")
-        gl.uniform1f(perspective, 1.275);
+        gl.uniform1f(perspective, 1.5);
     else
         gl.uniform1f(perspective, 0);
 
