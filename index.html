@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>3D Hollow Object</title>
-    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container">
@@ -18,44 +18,165 @@
           <div class="card-content">
             <div class="card-content-item">
               <h2>Translation</h2>
-              <label for="x">X</label>
-              <input type="range" id="translateX" name="x" min="-1" max="1" step="0.01" />
-              <label for="y">Y</label>
-              <input type="range" id="translateY" name="y" min="-1" max="1" step="0.01" />
-              <label for="z">Z</label>
-              <input type="range" id="translateZ" name="z" min="-1" max="1" step="0.01" />
+              <label for="translateX">X</label>
+              <input
+                type="range"
+                id="translateX"
+                min="-1"
+                max="1"
+                step="0.01"
+              />
+              <label for="translateY">Y</label>
+              <input
+                type="range"
+                id="translateY"
+                min="-1"
+                max="1"
+                step="0.01"
+              />
+              <label for="translateZ">Z</label>
+              <input
+                type="range"
+                id="translateZ"
+                min="-1"
+                max="1"
+                step="0.01"
+              />
             </div>
             <div class="card-content-item">
               <h2>Rotation</h2>
-              <label for="x">X</label>
-              <input type="range" id="rotateX" name="x" min="0" max="360" value="0" step="1" />
-              <label for="y">Y</label>
-              <input type="range" id="rotateY" name="y" min="0" max="360" value="0" step="1" />
-              <label for="z">Z</label>
-              <input type="range" id="rotateZ" name="z" min="0" max="360" value="0" step="1" />
+              <label for="rotateX">X</label>
+              <input type="range" id="rotateX" min="0" max="360" step="1" />
+              <label for="rotateY">Y</label>
+              <input type="range" id="rotateY" min="0" max="360" step="1" />
+              <label for="rotateZ">Z</label>
+              <input type="range" id="rotateZ" min="0" max="360" step="1" />
             </div>
             <div class="card-content-item">
               <h2>Scale</h2>
-              <label for="x">X</label>
-              <input type="range" id="scaleX" name="x" min="0" max="2" step="0.01" />
-              <label for="y">Y</label>
-              <input type="range" id="scaleY" name="y" min="0" max="2" step="0.01" />
-              <label for="z">Z</label>
-              <input type="range" id="scaleZ" name="z" min="0" max="2" step="0.01" />
+              <label for="scaleX">X</label>
+              <input type="range" id="scaleX" min="-5" max="5" step="0.01" />
+              <label for="scaleY">Y</label>
+              <input type="range" id="scaleY" min="-5" max="5" step="0.01" />
+              <label for="scaleZ">Z</label>
+              <input type="range" id="scaleZ" min="-5" max="5" step="0.01" />
             </div>
           </div>
         </div>
         <div class="card">
           <h1>Camera</h1>
+          <div class="card-content">
+            <div class="card-content-item">
+              <div>
+                <input
+                  type="radio"
+                  id="orthographic"
+                  name="projection"
+                  value="orthographic"
+                  checked
+                />
+                <label for="orthographic">Orthographic</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="oblique"
+                  name="projection"
+                  value="oblique"
+                />
+                <label for="oblique">Oblique</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="perspective"
+                  name="projection"
+                  value="perspective"
+                />
+                <label for="perspective">Perspective</label>
+              </div>
+            </div>
+            <div class="card-content-item">
+              <h2>Radius</h2>
+              <label for="radius">Radius</label>
+              <input type="range" id="radius" min="0" max="1" step="0.01" />
+            </div>
+            <div class="card-content-item">
+              <h2>Angle</h2>
+              <label for="angle">Angle</label>
+              <input type="range" id="angle" min="0" max="360" />
+            </div>
+          </div>
         </div>
         <div class="card">
           <h1>Load Model</h1>
+          <div class="card-content">
+            <div class="card-content-item">
+              <div>
+                <input
+                  type="radio"
+                  id="tetrahedron"
+                  name="model"
+                  value="tetrahedron"
+                />
+                <label for="tetrahedron">Tetrahedron</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="cube"
+                  name="model"
+                  value="cube"
+                  checked
+                />
+                <label for="cube">Cube</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="octahedron"
+                  name="model"
+                  value="octahedron"
+                />
+                <label for="octahedron">Octahedron</label>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="card">
           <h1>Others</h1>
+          <label for="colorWell">Color:</label>
+          <input type="color" id="colorWell" />
         </div>
       </div>
     </div>
+    <script id="vertex-shader-3d" type="x-shader/x-vertex">
+      attribute vec3 coordinates;
+      uniform float perspective;
+      uniform mat4 transformation;
+      uniform mat4 projection;
+      varying float color;
+
+      void main(void) {
+        vec4 position = projection * transformation * vec4(coordinates.x, coordinates.y, coordinates.z * -1.0, 1.0);
+        color = min(max((1.0 - position.z) / 2.0, 0.0), 1.0);
+        if (perspective < 0.01)
+          gl_Position = position;
+        else {
+          float perspectiveFac = 2.0 + position.z * perspective;
+          gl_Position = vec4(position.x / perspectiveFac, position.y / perspectiveFac, position.z, position.w);
+        }
+      }
+    </script>
+    <script id="fragment-shader-3d" type="x-shader/x-fragment">
+      precision mediump float;
+      uniform vec3 inputColor;
+      varying float color;
+
+      void main(void) {
+        gl_FragColor = vec4(inputColor * color, 1.0);
+      }
+    </script>
     <script type="module" src="./scripts/script.js"></script>
   </body>
 </html>
