@@ -109,3 +109,57 @@ export function draw(gl) {
     gl.drawElements(gl.TRIANGLES, model.indices.length, gl.UNSIGNED_SHORT, 0);
     window.requestAnimationFrame(() => draw(gl));
 }
+
+const translateX = document.getElementById("translateX");
+translateX.addEventListener("input", () => {
+    translation[0] = translateX.value;
+    draw(gl);
+});
+
+const translateY = document.getElementById("translateY");
+translateY.addEventListener("input", () => {
+    translation[1] = translateY.value;
+    draw(gl);
+});
+
+const translateZ = document.getElementById("translateZ");
+translateZ.addEventListener("input", () => {
+    translation[2] = translateZ.value;
+    draw(gl);
+});
+
+const rotateX = document.getElementById("rotateX");
+rotateX.addEventListener("input", () => {
+    rotation[0] = rotateX.value * Math.PI / 180;
+    draw(gl);
+});
+
+const rotateY = document.getElementById("rotateY");
+rotateY.addEventListener("input", () => {
+    rotation[1] = rotateY.value * Math.PI / 180;
+    draw(gl);
+});
+
+const rotateZ = document.getElementById("rotateZ");
+rotateZ.addEventListener("input", () => {
+    rotation[2] = rotateZ.value * Math.PI / 180;
+    draw(gl);
+});
+
+const scaleX = document.getElementById("scaleX");
+scaleX.addEventListener("input", () => {
+    scale[0] = scaleX.value;
+    draw(gl);
+});
+
+const scaleY = document.getElementById("scaleY");
+scaleY.addEventListener("input", () => {
+    scale[1] = scaleY.value;
+    draw(gl);
+});
+
+const scaleZ = document.getElementById("scaleZ");
+scaleZ.addEventListener("input", () => {
+    scale[2] = scaleZ.value;
+    draw(gl);
+});
