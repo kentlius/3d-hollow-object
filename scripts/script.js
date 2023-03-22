@@ -256,18 +256,28 @@ function main() {
 
     gl.vertexAttribPointer(coordinates, 3, gl.FLOAT, false, 0, 0);
 
+    // const transformationMatrix = multiply(
+    //   multiply(
+    //     multiply(
+    //       multiply(scaleMatrix(scale), xRotationMatrix(rotation[0])),
+    //       yRotationMatrix(rotation[1])
+    //     ),
+    //     zRotationMatrix(rotation[2])
+    //   ),
+    //   translationMatrix(translation)
+    // );
     const transformationMatrix = multiply(
       multiply(
         multiply(
-          multiply(scaleMatrix(scale), xRotationMatrix(rotation[0])),
-          yRotationMatrix(rotation[1])
+          multiply(translationMatrix(translation), scaleMatrix(scale)),
+          xRotationMatrix(rotation[0])
         ),
-        zRotationMatrix(rotation[2])
+        yRotationMatrix(rotation[1])
       ),
-      translationMatrix(translation)
+      zRotationMatrix(rotation[2])
     );
 
-    const projectionMatrix = multiply(
+    var projectionMatrix = multiply(
       orthographicMatrix(),
       inverse(
         multiply(
@@ -283,6 +293,18 @@ function main() {
       new Float32Array(transformationMatrix)
     );
     gl.uniform3f(inputColor, baseColor[0], baseColor[1], baseColor[2]);
+
+    if (projectionType === "oblique") {
+      projectionMatrix = multiply(
+        obliqueMatrix(),
+        inverse(
+          multiply(
+            yRotationMatrix((viewAngle * Math.PI) / 180),
+            translationMatrix([0, 0, viewRadius])
+          )
+        )
+      )
+    }
 
     if (projectionType === "perspective") gl.uniform1f(perspective, 1.5);
     else gl.uniform1f(perspective, 0);
