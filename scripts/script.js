@@ -88,7 +88,7 @@ function main() {
   let viewAngle = 30;
   let viewRadius = 0.2;
   let projectionType = "orthographic";
-  let baseColor = [0, 1, 1, 1];
+  let baseColor = [96, 153, 102, 1];
 
   let rotationSpeed = 0.2;
 
@@ -244,6 +244,7 @@ function main() {
     resizeCanvasToDisplaySize(gl.canvas);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    // gl.clearColor(0.0, 0.0, 0.0, 1.0);
     gl.enable(gl.CULL_FACE);
     gl.enable(gl.DEPTH_TEST);
     gl.useProgram(program);
@@ -292,7 +293,7 @@ function main() {
       false,
       new Float32Array(transformationMatrix)
     );
-    gl.uniform3f(inputColor, baseColor[0], baseColor[1], baseColor[2]);
+    gl.uniform3f(inputColor, baseColor[0] / 255, baseColor[1] / 255, baseColor[2] / 255);
 
     if (projectionType === "oblique") {
       projectionMatrix = multiply(
