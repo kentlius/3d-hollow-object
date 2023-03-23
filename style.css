@@ -73,3 +73,34 @@ canvas {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
+
+#reset {
+  border-radius: 5px;
+  background: var(--accent-color);
+  color: var(--primary-color);
+  border: 0;
+  padding: 0.5rem 1rem;
+  opacity: 0.8;
+  transition: all 0.2s ease-in-out;
+}
+
+#reset:hover {
+  opacity: 1;
+}
+
+#help {
+  position: fixed;
+  background: var(--secondary-color);
+  color: var(--accent-color-2);
+  border: 0;
+  border-radius: 50%;
+  padding: 12px;
+  bottom: 12px;
+  right: 12px;
+  transition: all 0.2s ease-in-out;
+}
+
+#help:hover {
+  background: var(--accent-color);
+  color: var(--primary-color);
+}
