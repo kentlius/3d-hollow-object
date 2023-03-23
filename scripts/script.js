@@ -106,6 +106,16 @@ function main() {
     gl.STATIC_DRAW
   );
 
+  const animation = document.getElementById("animation");
+  animation.checked = true;
+  animation.addEventListener("change", (event) => {
+    if (!event.target.checked) {
+      rotationSpeed = 0;
+    } else {
+      rotationSpeed = 0.2;
+    }
+  });
+
   // Model Radio Button Handler
   const models = document.querySelectorAll("input[name='model']");
   models.forEach((model) => {
