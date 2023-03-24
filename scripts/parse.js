@@ -32,6 +32,5 @@ export function parseObject(file) {
     model.vertices[i] = normed - 0.5;
   });
 
-  console.log(model);
-  return [model, json.surfaces] ;
+  return [model, json.surfaces];
 }

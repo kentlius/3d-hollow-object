@@ -27,4 +27,4 @@ function obliqueMatrix(){
   ];
 }
 
-export { orthographicMatrix, perspectiveMatrix, obliqueMatrix }
+export { orthographicMatrix, perspectiveMatrix, obliqueMatrix };

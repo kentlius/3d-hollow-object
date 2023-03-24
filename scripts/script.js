@@ -66,7 +66,7 @@ function main() {
   const inputColor = gl.getUniformLocation(program, "inputColor");
   const projection = gl.getUniformLocation(program, "projection");
   const perspective = gl.getUniformLocation(program, "perspective");
-  let isShadingOn = gl.getUniformLocation(program, "Onshading");
+  const isShadingOn = gl.getUniformLocation(program, "Onshading");
 
   const verticesBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, verticesBuffer);
@@ -94,7 +94,7 @@ function main() {
   let baseColor = [96, 153, 102, 1];
 
   let rotationSpeed = 0.2;
-  let modelName = "cube"
+  let modelName = "cube";
   let then = 0;
 
   gl.bufferData(
@@ -125,8 +125,7 @@ function main() {
   shading.addEventListener("change", (event) => {
     if (!event.target.checked) {
       isShading = false;
-    }
-    else {
+    } else {
       isShading = true;
     }
     gl.uniform1i(isShadingOn, isShading);
@@ -255,17 +254,17 @@ function main() {
   var load_btn = document.querySelector("#load");
   load_btn.onclick = function (event) {
     loadModel();
-  }
-  
+  };
+
   function loadModel() {
     var file = document.querySelector("#loadedFile").files[0];
     if (file == null) {
       window.alert("No file selected");
-      return
+      return;
     }
 
-    var fileReader = new FileReader()
-    fileReader.onload = function() {
+    var fileReader = new FileReader();
+    fileReader.onload = function () {
       modelName = file.name.split(".json")[0];
       // parsedInput = parseObject(fileReader.result);
       // modelType = parsedInput[0];
@@ -275,7 +274,7 @@ function main() {
         vertices: [],
         indices: [],
       };
-      
+
       const json = JSON.parse(fileReader.result);
       model.vertices = json.vertices;
       const surfaces = json.surfaces;
@@ -295,7 +294,7 @@ function main() {
         return Math.min(a, b);
       });
       const range = max - min;
-    
+
       model.vertices.forEach((item, i) => {
         const normed = (item - min) / range;
         model.vertices[i] = normed - 0.5;
@@ -332,7 +331,6 @@ function main() {
   });
 
   function render(now) {
-    // Animation
     now *= 0.001;
     const deltaTime = now - then;
     then = now;
@@ -360,22 +358,11 @@ function main() {
 
     gl.enableVertexAttribArray(coordinates);
 
-    // Bind vertices and indices
     gl.bindBuffer(gl.ARRAY_BUFFER, verticesBuffer);
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indicesBuffer);
 
     gl.vertexAttribPointer(coordinates, 3, gl.FLOAT, false, 0, 0);
 
-    // const transformationMatrix = multiply(
-    //   multiply(
-    //     multiply(
-    //       multiply(scaleMatrix(scale), xRotationMatrix(rotation[0])),
-    //       yRotationMatrix(rotation[1])
-    //     ),
-    //     zRotationMatrix(rotation[2])
-    //   ),
-    //   translationMatrix(translation)
-    // );
     const transformationMatrix = multiply(
       translationMatrix(translation),
       multiply(
@@ -387,54 +374,64 @@ function main() {
       )
     );
 
-    function getNewVertices(){
-  
-      let initialVertices = modelType.vertices
-  
+    function getNewVertices() {
+      let initialVertices = modelType.vertices;
+
       const tempVertices = new Float32Array(initialVertices.length);
-  
+
       for (let i = 0; i < initialVertices.length; i += 3) {
         let vertex = [
           initialVertices[i],
           initialVertices[i + 1],
-          initialVertices[i + 2]
+          initialVertices[i + 2],
         ];
-  
+
         let transformedVertex = [
-          transformationMatrix[0] * vertex[0] + transformationMatrix[4] * vertex[1] + transformationMatrix[8] * vertex[2] + transformationMatrix[12],
-          transformationMatrix[1] * vertex[0] + transformationMatrix[5] * vertex[1] + transformationMatrix[9] * vertex[2] + transformationMatrix[13],
-          transformationMatrix[2] * vertex[0] + transformationMatrix[6] * vertex[1] + transformationMatrix[10] * vertex[2] + transformationMatrix[14]
+          transformationMatrix[0] * vertex[0] +
+            transformationMatrix[4] * vertex[1] +
+            transformationMatrix[8] * vertex[2] +
+            transformationMatrix[12],
+          transformationMatrix[1] * vertex[0] +
+            transformationMatrix[5] * vertex[1] +
+            transformationMatrix[9] * vertex[2] +
+            transformationMatrix[13],
+          transformationMatrix[2] * vertex[0] +
+            transformationMatrix[6] * vertex[1] +
+            transformationMatrix[10] * vertex[2] +
+            transformationMatrix[14],
         ];
-  
+
         tempVertices[i] = transformedVertex[0];
         tempVertices[i + 1] = transformedVertex[1];
         tempVertices[i + 2] = transformedVertex[2];
-  
       }
-      
+
       let transformedVertices = Array.prototype.slice.call(tempVertices);
 
-      return transformedVertices
+      return transformedVertices;
     }
+
     var btn = document.querySelector("#save");
     btn.onclick = function (event) {
       saveModel();
-    }
-    
-    function saveModel(){
+    };
+
+    function saveModel() {
       let newVertices = getNewVertices();
 
-      let surfaces = modelSurfaces
-      
+      let surfaces = modelSurfaces;
+
       let object = {
-        "vertices": newVertices,
-        "surfaces": modelSurfaces
-      }
-  
+        vertices: newVertices,
+        surfaces: modelSurfaces,
+      };
+
       var a = document.createElement("a");
-      var file = new Blob([JSON.stringify(object, null, 4)], {type: 'text/plain'});
+      var file = new Blob([JSON.stringify(object, null, 4)], {
+        type: "text/plain",
+      });
       a.href = URL.createObjectURL(file);
-      a.download = 'saved-'+ modelName +'.json';
+      a.download = "saved-" + modelName + ".json";
       a.click();
     }
 
@@ -453,7 +450,13 @@ function main() {
       false,
       new Float32Array(transformationMatrix)
     );
-    gl.uniform3f(inputColor, baseColor[0] / 255, baseColor[1] / 255, baseColor[2] / 255);
+    gl.uniform3f(
+      inputColor,
+      baseColor[0] / 255,
+      baseColor[1] / 255,
+      baseColor[2] / 255
+    );
+    gl.uniform1i(isShadingOn, isShading);
 
     if (projectionType === "oblique") {
       projectionMatrix = multiply(
@@ -467,12 +470,12 @@ function main() {
       );
     }
 
-    if (projectionType === "perspective") gl.uniform1f(perspective, 1.5);
-    else gl.uniform1f(perspective, 0);
+    projectionType === "perspective"
+      ? gl.uniform1f(perspective, 1.5)
+      : gl.uniform1f(perspective, 0);
 
     gl.uniformMatrix4fv(projection, false, projectionMatrix);
 
-    // Draw
     gl.drawElements(
       gl.TRIANGLES,
       modelType.indices.length,

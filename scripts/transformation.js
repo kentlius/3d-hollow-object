@@ -4,7 +4,7 @@ function translationMatrix(translationFactor) {
     0, 1, 0, 0,
     0, 0, 1, 0,
     translationFactor[0], translationFactor[1], translationFactor[2], 1
-  ]
+  ];
 }
 function xRotationMatrix(rotationFactor) {
   return [
@@ -12,15 +12,15 @@ function xRotationMatrix(rotationFactor) {
     0, Math.cos(rotationFactor), -Math.sin(rotationFactor), 0,
     0, Math.sin(rotationFactor), Math.cos(rotationFactor), 0,
     0, 0, 0, 1
-  ]
+  ];
 }
 function yRotationMatrix(rotationFactor) {
-    return [
-      Math.cos(rotationFactor), 0, Math.sin(rotationFactor), 0,
-      0, 1, 0, 0,
-      -Math.sin(rotationFactor), 0, Math.cos(rotationFactor), 0,
-      0, 0, 0, 1
-    ]
+  return [
+    Math.cos(rotationFactor), 0, Math.sin(rotationFactor), 0,
+    0, 1, 0, 0,
+    -Math.sin(rotationFactor), 0, Math.cos(rotationFactor), 0,
+    0, 0, 0, 1
+  ];
 }
 function zRotationMatrix(rotationFactor) {
   return [
@@ -28,7 +28,7 @@ function zRotationMatrix(rotationFactor) {
     Math.sin(rotationFactor), Math.cos(rotationFactor), 0, 0,
     0, 0, 1, 0,
     0, 0, 0, 1
-  ]
+  ];
 }
 function scaleMatrix(scaleFactor) {
   return [
@@ -36,7 +36,7 @@ function scaleMatrix(scaleFactor) {
     0, scaleFactor[1], 0, 0,
     0, 0, scaleFactor[2], 0,
     0, 0, 0, 1
-  ]
+  ];
 }
 
 export {
@@ -45,4 +45,4 @@ export {
   yRotationMatrix,
   zRotationMatrix,
   scaleMatrix
-}
+};
