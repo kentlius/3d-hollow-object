@@ -81,7 +81,9 @@ function main() {
     return (d * Math.PI) / 180;
   }
 
-  let modelType = parseObject("../../test/cube.json");
+  let parsedInput = parseObject("../../test/cube.json");
+  let modelType = parsedInput[0];
+  let modelSurfaces = parsedInput[1];
   let translation = [0, 0, 0];
   let rotation = [degToRad(40), degToRad(25), degToRad(325)];
   let scale = [1, 1, 1];
@@ -91,7 +93,7 @@ function main() {
   let baseColor = [96, 153, 102, 1];
 
   let rotationSpeed = 0.2;
-
+  let modelName = "cube"
   let then = 0;
 
   gl.bufferData(
@@ -120,7 +122,12 @@ function main() {
   const models = document.querySelectorAll("input[name='model']");
   models.forEach((model) => {
     model.addEventListener("change", (event) => {
-      modelType = parseObject("../../test/" + event.target.value + ".json");
+      modelName = event.target.value;
+      parsedInput = parseObject("../../test/" + event.target.value + ".json");
+      console.log("../../test/" + event.target.value + ".json")
+      modelType = parsedInput[0];
+      modelSurfaces = parsedInput[1];
+
       gl.bufferData(
         gl.ARRAY_BUFFER,
         new Float32Array(modelType.vertices),
@@ -232,6 +239,73 @@ function main() {
     return [r, g, b, 1.0];
   }
 
+  var load_btn = document.getElementById("load");
+  load_btn.onclick = function(event) {
+    loadModel();
+  }
+  
+  function loadModel() {
+    var file = document.getElementById('loadedFile').files[0];
+    if(file == null) {
+      window.alert("No file selected");
+      return
+    }
+
+    var fileReader = new FileReader()
+    fileReader.onload = function() {
+      modelName = file.name.split(".json")[0];
+      // parsedInput = parseObject(fileReader.result);
+      // modelType = parsedInput[0];
+      // modelSurfaces = parsedInput[1];
+
+      const model = {
+        vertices: [],
+        indices: [],
+      };
+      
+      const json = JSON.parse(fileReader.result);
+      model.vertices = json.vertices;
+      const surfaces = json.surfaces;
+      for (let i = 0; i < surfaces.length; i++) {
+        const surface = surfaces[i];
+        const indices = surface.split("-");
+        for (let j = 1; j + 1 < indices.length; j++) {
+          model.indices.push(indices[0]);
+          model.indices.push(indices[j]);
+          model.indices.push(indices[j + 1]);
+        }
+      }
+      const max = model.vertices.reduce((a, b) => {
+        return Math.max(a, b);
+      });
+      const min = model.vertices.reduce((a, b) => {
+        return Math.min(a, b);
+      });
+      const range = max - min;
+    
+      model.vertices.forEach((item, i) => {
+        const normed = (item - min) / range;
+        model.vertices[i] = normed - 0.5;
+      });
+
+      modelType = model;
+      modelSurfaces = json.surfaces;
+
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array(modelType.vertices),
+        gl.STATIC_DRAW
+      );
+
+      gl.bufferData(
+        gl.ELEMENT_ARRAY_BUFFER,
+        new Uint16Array(modelType.indices),
+        gl.STATIC_DRAW
+      );
+    };
+    fileReader.readAsText(file);
+  }
+
   function render(now) {
     // Animation
     now *= 0.001;
@@ -287,6 +361,64 @@ function main() {
       ),
       zRotationMatrix(rotation[2])
     );
+
+    function getNewVertices(){
+  
+      let initialVertices = modelType.vertices
+  
+      const tempVertices = new Float32Array(initialVertices.length);
+  
+      for (let i = 0; i < initialVertices.length; i += 3) {
+        let vertex = [
+          initialVertices[i],
+          initialVertices[i + 1],
+          initialVertices[i + 2]
+        ];
+  
+        let transformedVertex = [
+          transformationMatrix[0] * vertex[0] + transformationMatrix[4] * vertex[1] + transformationMatrix[8] * vertex[2] + transformationMatrix[12],
+          transformationMatrix[1] * vertex[0] + transformationMatrix[5] * vertex[1] + transformationMatrix[9] * vertex[2] + transformationMatrix[13],
+          transformationMatrix[2] * vertex[0] + transformationMatrix[6] * vertex[1] + transformationMatrix[10] * vertex[2] + transformationMatrix[14]
+        ];
+  
+        tempVertices[i] = transformedVertex[0];
+        tempVertices[i + 1] = transformedVertex[1];
+        tempVertices[i + 2] = transformedVertex[2];
+  
+      }
+      
+      let transformedVertices = Array.prototype.slice.call(tempVertices);
+
+      return transformedVertices
+    }
+
+    // console.log(saveModel())
+
+    // console.log(getNewVertices())
+  
+    // console.log("aaa",modelType.vertices)
+
+    var btn = document.getElementById("save");
+    btn.onclick = function(event) {
+      saveModel();
+    }
+    
+    function saveModel(){
+      let newVertices = getNewVertices();
+
+      let surfaces = modelSurfaces
+      
+      let object = {
+        "vertices": newVertices,
+        "surfaces": modelSurfaces
+      }
+  
+      var a = document.createElement("a");
+      var file = new Blob([JSON.stringify(object, null, 4)], {type: 'text/plain'});
+      a.href = URL.createObjectURL(file);
+      a.download = 'saved-'+ modelName +'.json';
+      a.click();
+    }
 
     var projectionMatrix = multiply(
       orthographicMatrix(),

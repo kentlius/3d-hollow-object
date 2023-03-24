@@ -33,5 +33,5 @@ export function parseObject(file) {
   });
 
   console.log(model);
-  return model;
+  return [model, json.surfaces] ;
 }
