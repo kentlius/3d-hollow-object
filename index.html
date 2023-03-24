@@ -9,64 +9,86 @@
   </head>
   <body>
     <div class="container">
-      <div>
+      <div class="canvas">
         <canvas id="canvas" width="360" height="360"></canvas>
       </div>
       <div class="tools">
-        <div class="card">
-          <h1>Transformation</h1>
-          <div class="card-content">
-            <div class="card-content-item">
-              <h2>Translation</h2>
-              <label for="translateX">X</label>
-              <input
-                type="range"
-                id="translateX"
-                min="-1"
-                max="1"
-                step="0.01"
-              />
-              <label for="translateY">Y</label>
-              <input
-                type="range"
-                id="translateY"
-                min="-1"
-                max="1"
-                step="0.01"
-              />
-              <label for="translateZ">Z</label>
-              <input
-                type="range"
-                id="translateZ"
-                min="-1"
-                max="1"
-                step="0.01"
-              />
+        <h1>Transformation</h1>
+        <div class="card-content">
+          <div class="card-content-item">
+            <h2>Translation</h2>
+            <div class="sliders">
+              <div>
+                <label for="translateX">X</label>
+                <input
+                  type="range"
+                  id="translateX"
+                  min="-1"
+                  max="1"
+                  step="0.01"
+                />
+              </div>
+              <div>
+                <label for="translateY">Y</label>
+                <input
+                  type="range"
+                  id="translateY"
+                  min="-1"
+                  max="1"
+                  step="0.01"
+                />
+              </div>
+              <div>
+                <label for="translateZ">Z</label>
+                <input
+                  type="range"
+                  id="translateZ"
+                  min="-1"
+                  max="1"
+                  step="0.01"
+                />
+              </div>
             </div>
-            <div class="card-content-item">
-              <h2>Rotation</h2>
-              <label for="rotateX">X</label>
-              <input type="range" id="rotateX" min="0" max="360" step="1" />
-              <label for="rotateY">Y</label>
-              <input type="range" id="rotateY" min="0" max="360" step="1" />
-              <label for="rotateZ">Z</label>
-              <input type="range" id="rotateZ" min="0" max="360" step="1" />
+          </div>
+          <div class="card-content-item">
+            <h2>Rotation</h2>
+            <div class="sliders">
+              <div>
+                <label for="rotateX">X</label>
+                <input type="range" id="rotateX" min="0" max="360" step="1" />
+              </div>
+              <div>
+                <label for="rotateY">Y</label>
+                <input type="range" id="rotateY" min="0" max="360" step="1" />
+              </div>
+              <div>
+                <label for="rotateZ">Z</label>
+                <input type="range" id="rotateZ" min="0" max="360" step="1" />
+              </div>
             </div>
-            <div class="card-content-item">
-              <h2>Scale</h2>
-              <label for="scaleX">X</label>
-              <input type="range" id="scaleX" min="0" max="3" step="0.01" />
-              <label for="scaleY">Y</label>
-              <input type="range" id="scaleY" min="0" max="3" step="0.01" />
-              <label for="scaleZ">Z</label>
-              <input type="range" id="scaleZ" min="0" max="3" step="0.01" />
+          </div>
+          <div class="card-content-item">
+            <h2>Scale</h2>
+            <div class="sliders">
+              <div>
+                <label for="scaleX">X</label>
+                <input type="range" id="scaleX" min="0" max="3" step="0.01" />
+              </div>
+              <div>
+                <label for="scaleY">Y</label>
+                <input type="range" id="scaleY" min="0" max="3" step="0.01" />
+              </div>
+              <div>
+                <label for="scaleZ">Z</label>
+                <input type="range" id="scaleZ" min="0" max="3" step="0.01" />
+              </div>
             </div>
           </div>
         </div>
-        <div class="card">
-          <h1>Camera</h1>
-          <div class="card-content">
-            <div class="card-content-item">
+        <h1>Camera</h1>
+        <div class="card-content">
+          <div class="card-content-item">
+            <div class="sliders">
               <div>
                 <input
                   type="radio"
@@ -96,22 +118,24 @@
                 <label for="perspective">Perspective</label>
               </div>
             </div>
-            <div class="card-content-item">
-              <h2>Radius</h2>
-              <label for="radius">Radius</label>
-              <input type="range" id="radius" min="0" max="1" step="0.01" />
-            </div>
-            <div class="card-content-item">
-              <h2>Angle</h2>
-              <label for="angle">Angle</label>
-              <input type="range" id="angle" min="0" max="360" />
+          </div>
+          <div class="card-content-item">
+            <div class="sliders">
+              <div>
+                <label for="radius">Radius</label>
+                <input type="range" id="radius" min="0" max="1" step="0.01" />
+              </div>
+              <div>
+                <label for="angle">Angle</label>
+                <input type="range" id="angle" min="0" max="360" />
+              </div>
             </div>
           </div>
         </div>
-        <div class="card">
-          <h1>Load Model</h1>
-          <div class="card-content">
-            <div class="card-content-item">
+        <h1>Load Model</h1>
+        <div class="card-content">
+          <div class="card-content-item">
+            <div class="sliders">
               <div>
                 <input
                   type="radio"
@@ -142,51 +166,143 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="card">
-          <h1>Others</h1>
-          <div class="card-content">
-            <div class="card-content-item">
+          <div class="card-content-item">
+            <div class="sliders">
               <div>
-                <label for="colorWell">Color:</label>
+                <input
+                  type="file"
+                  id="loadedFile"
+                  name="myfile"
+                  accept="application/JSON"
+                />
+              </div>
+              <div>
+                <button class="button" id="save">Save</button>
+                <button class="button" id="load">Load</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h1>Others</h1>
+        <div class="card-content">
+          <div class="card-content-item">
+            <div class="sliders">
+              <div>
+                <label for="colorWell">Model Color</label>
                 <input type="color" id="colorWell" />
+              </div>
+              <div>
+                <input type="checkbox" id="shading" />
+                <label for="shading">Shading</label>
               </div>
               <div>
                 <input type="checkbox" id="animation" />
                 <label for="animation">Animation</label>
               </div>
               <div>
-                <button id="reset">Reset</button>
-              </div>
-              <div>
-                <button id="save">Save</button>
-              </div>
-              <input type="file" id="loadedFile" name="myfile" accept="application/JSON">
-              <button id="load">Load</button>
-              <div>
-                <input type="checkbox" id="shading"/>
-                <label for="shading">Shading</label>
+                <button class="button" id="reset" onclick="location.reload()">
+                  Reset
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <div>
-          <button id="help">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              class="bi bi-question"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"
-              />
-            </svg>
-          </button>
-        </div>
       </div>
+      <button id="help-btn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="currentColor"
+          class="bi bi-question"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"
+          />
+        </svg>
+      </button>
+      <dialog id="help-modal">
+        <h1>Help</h1>
+        <h2>Transformation</h2>
+        <p>
+          <b>Translation</b> - The object is moved along the x, y and z axes.
+        </p>
+        <p>
+          <b>Rotation</b> - The object is rotated around the x, y and z axes.
+        </p>
+        <p><b>Scaling</b> - The object is scaled along the x, y and z axes.</p>
+        <h2>Camera</h2>
+        <p>
+          <b>Orthographic</b> - The camera is positioned at a fixed distance
+          from the origin and the projection is parallel to the xy-plane.
+        </p>
+        <p>
+          <b>Oblique</b> - The camera is positioned at a fixed distance from the
+          origin and the projection is parallel to the xy-plane. The camera is
+          rotated around the z-axis.
+        </p>
+        <p>
+          <b>Perspective</b> - The camera is positioned at a fixed distance from
+          the origin and the projection is parallel to the xy-plane. The camera
+          is rotated around the z-axis. The projection is scaled according to
+          the distance of the object from the camera.
+        </p>
+        <p><b>Radius</b> - The distance of the camera from the origin.</p>
+        <p>
+          <b>Angle</b> - The angle of rotation of the camera around the z-axis.
+        </p>
+        <h2>Load Model</h2>
+        <p>
+          <b>Tetrahedron</b> - A tetrahedron is a polyhedron composed of four
+          triangular faces, six straight edges, and four vertex corners. It is
+          one of the five regular polyhedrons and is the only one with all
+          triangular faces.
+        </p>
+        <p>
+          <b>Cube</b> - A cube is a three-dimensional solid object bounded by
+          six square faces, facets or sides, with three meeting at each vertex.
+          The cube is the only regular hexahedron and is one of the five
+          Platonic solids.
+        </p>
+        <p>
+          <b>Octahedron</b> - An octahedron is a polyhedron composed of eight
+          flat triangular faces, six straight edges, and eight vertex corners.
+          It is one of the five regular polyhedrons and is the only one with all
+          triangular faces.
+        </p>
+        <p><b>Load</b> - Load a model from a JSON file.</p>
+        <p><b>Save</b> - Save the current model to a JSON file.</p>
+        <h2>Others</h2>
+        <p><b>Model Color</b> - Change the color of the model.</p>
+        <p><b>Shading</b> - Enable or disable shading.</p>
+        <p><b>Animation</b> - Enable or disable animation.</p>
+        <p><b>Reset</b> - Reset the model to its initial state.</p>
+        <div id="help-close">
+          <?xml version="1.0" encoding="UTF-8"?><svg
+            width="45"
+            height="45"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14 14L34 34"
+              stroke="#000"
+              stroke-width="1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M14 34L34 14"
+              stroke="#000"
+              stroke-width="1"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+      </dialog>
     </div>
     <script id="vertex-shader-3d" type="x-shader/x-vertex">
       attribute vec3 coordinates;

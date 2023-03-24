@@ -109,7 +109,7 @@ function main() {
     gl.STATIC_DRAW
   );
 
-  const animation = document.getElementById("animation");
+  const animation = document.querySelector("#animation");
   animation.checked = true;
   animation.addEventListener("change", (event) => {
     if (!event.target.checked) {
@@ -119,8 +119,9 @@ function main() {
     }
   });
 
-  const shading = document.getElementById("shading");
+  const shading = document.querySelector("#shading");
   let isShading = true;
+  shading.checked = true;
   shading.addEventListener("change", (event) => {
     if (!event.target.checked) {
       isShading = false;
@@ -163,78 +164,78 @@ function main() {
   });
 
   // Translation Slider Handlers
-  const translateX = document.getElementById("translateX");
+  const translateX = document.querySelector("#translateX");
   translateX.value = translation[0];
   translateX.addEventListener("input", () => {
     translation[0] = translateX.value;
   });
 
-  const translateY = document.getElementById("translateY");
+  const translateY = document.querySelector("#translateY");
   translateY.value = translation[1];
   translateY.addEventListener("input", () => {
     translation[1] = translateY.value;
   });
 
-  const translateZ = document.getElementById("translateZ");
+  const translateZ = document.querySelector("#translateZ");
   translateZ.value = translation[2];
   translateZ.addEventListener("input", () => {
     translation[2] = translateZ.value;
   });
 
   // Rotation Slider Handlers
-  const rotateX = document.getElementById("rotateX");
+  const rotateX = document.querySelector("#rotateX");
   rotateX.value = radToDeg(rotation[0]);
   rotateX.addEventListener("input", () => {
     rotation[0] = (rotateX.value * Math.PI) / 180;
   });
 
-  const rotateY = document.getElementById("rotateY");
+  const rotateY = document.querySelector("#rotateY");
   rotateY.value = radToDeg(rotation[1]);
   rotateY.addEventListener("input", () => {
     rotation[1] = (rotateY.value * Math.PI) / 180;
   });
 
-  const rotateZ = document.getElementById("rotateZ");
+  const rotateZ = document.querySelector("#rotateZ");
   rotateZ.value = radToDeg(rotation[2]);
   rotateZ.addEventListener("input", () => {
     rotation[2] = (rotateZ.value * Math.PI) / 180;
   });
 
   // Scale Slider Handlers
-  const scaleX = document.getElementById("scaleX");
+  const scaleX = document.querySelector("#scaleX");
   scaleX.value = scale[0];
   scaleX.addEventListener("input", () => {
     scale[0] = scaleX.value;
   });
 
-  const scaleY = document.getElementById("scaleY");
+  const scaleY = document.querySelector("#scaleY");
   scaleY.value = scale[1];
   scaleY.addEventListener("input", () => {
     scale[1] = scaleY.value;
   });
 
-  const scaleZ = document.getElementById("scaleZ");
+  const scaleZ = document.querySelector("#scaleZ");
   scaleZ.value = scale[2];
   scaleZ.addEventListener("input", () => {
     scale[2] = scaleZ.value;
   });
 
   // View Angle Slider Handler
-  const angle = document.getElementById("angle");
+  const angle = document.querySelector("#angle");
   angle.value = viewAngle;
   angle.addEventListener("input", () => {
     viewAngle = angle.value;
   });
 
   // View Radius Slider Handler
-  const radius = document.getElementById("radius");
+  const radius = document.querySelector("#radius");
   radius.value = viewRadius;
   radius.addEventListener("input", () => {
     viewRadius = radius.value;
   });
 
   // Color Picker Handler
-  const colorWell = document.getElementById("colorWell");
+  const colorWell = document.querySelector("#colorWell");
   colorWell.value = rgbToHex(baseColor[0], baseColor[1], baseColor[2]);
   colorWell.addEventListener("input", () => {
     baseColor = hexToRgb(colorWell.value);
@@ -251,14 +252,14 @@ function main() {
     return [r, g, b, 1.0];
   }
 
-  var load_btn = document.getElementById("load");
-  load_btn.onclick = function(event) {
+  var load_btn = document.querySelector("#load");
+  load_btn.onclick = function (event) {
     loadModel();
   }
   
   function loadModel() {
-    var file = document.getElementById('loadedFile').files[0];
-    if(file == null) {
+    var file = document.querySelector("#loadedFile").files[0];
+    if (file == null) {
       window.alert("No file selected");
       return
     }
@@ -318,13 +319,25 @@ function main() {
     fileReader.readAsText(file);
   }
 
+  const help = document.querySelector("#help-modal");
+
+  const helpOpen = document.querySelector("#help-btn");
+  helpOpen.addEventListener("click", () => {
+    help.showModal();
+  });
+
+  const helpClose = document.querySelector("#help-close");
+  helpClose.addEventListener("click", () => {
+    help.close();
+  });
+
   function render(now) {
     // Animation
     now *= 0.001;
     const deltaTime = now - then;
     then = now;
     rotation[1] += rotationSpeed * deltaTime;
-    rotateY.value = radToDeg(rotation[1]);
+    rotateY.value = radToDeg(rotation[1]) % 360;
 
     function resizeCanvasToDisplaySize(canvas, multiplier) {
       multiplier = multiplier || 1;
@@ -403,9 +416,8 @@ function main() {
 
       return transformedVertices
     }
-    
-    var btn = document.getElementById("save");
-    btn.onclick = function(event) {
+    var btn = document.querySelector("#save");
+    btn.onclick = function (event) {
       saveModel();
     }
     
