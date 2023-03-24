@@ -37,8 +37,8 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: |
-            ./src/
-            ./test
+            src/
+            test
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
