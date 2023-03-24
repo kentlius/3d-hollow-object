@@ -251,19 +251,19 @@ function main() {
     return [r, g, b, 1.0];
   }
 
-  var load_btn = document.querySelector("#load");
+  const load_btn = document.querySelector("#load");
   load_btn.onclick = function (event) {
     loadModel();
   };
 
   function loadModel() {
-    var file = document.querySelector("#loadedFile").files[0];
+    const file = document.querySelector("#loadedFile").files[0];
     if (file == null) {
       window.alert("No file selected");
       return;
     }
 
-    var fileReader = new FileReader();
+    const fileReader = new FileReader();
     fileReader.onload = function () {
       modelName = file.name.split(".json")[0];
       // parsedInput = parseObject(fileReader.result);
@@ -411,7 +411,7 @@ function main() {
       return transformedVertices;
     }
 
-    var btn = document.querySelector("#save");
+    const btn = document.querySelector("#save");
     btn.onclick = function (event) {
       saveModel();
     };
@@ -426,8 +426,8 @@ function main() {
         surfaces: modelSurfaces,
       };
 
-      var a = document.createElement("a");
-      var file = new Blob([JSON.stringify(object, null, 4)], {
+      const a = document.createElement("a");
+      const file = new Blob([JSON.stringify(object, null, 4)], {
         type: "text/plain",
       });
       a.href = URL.createObjectURL(file);
@@ -435,7 +435,7 @@ function main() {
       a.click();
     }
 
-    var projectionMatrix = multiply(
+    let projectionMatrix = multiply(
       orthographicMatrix(),
       inverse(
         multiply(
