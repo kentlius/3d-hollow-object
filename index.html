@@ -163,6 +163,10 @@
               </div>
               <input type="file" id="loadedFile" name="myfile" accept="application/JSON">
               <button id="load">Load</button>
+              <div>
+                <input type="checkbox" id="shading"/>
+                <label for="shading">Shading</label>
+              </div>
             </div>
           </div>
         </div>
@@ -206,9 +210,13 @@
       precision mediump float;
       uniform vec3 inputColor;
       varying float color;
+      uniform bool Onshading;
 
       void main(void) {
-        gl_FragColor = vec4(inputColor * color, 1.0);
+        if (Onshading == true)
+          gl_FragColor = vec4(inputColor * color, 1.0);
+        else
+          gl_FragColor = vec4(inputColor, 1.0);
       }
     </script>
     <script type="module" src="./scripts/script.js"></script>

@@ -66,6 +66,7 @@ function main() {
   const inputColor = gl.getUniformLocation(program, "inputColor");
   const projection = gl.getUniformLocation(program, "projection");
   const perspective = gl.getUniformLocation(program, "perspective");
+  let isShadingOn = gl.getUniformLocation(program, "Onshading");
 
   const verticesBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, verticesBuffer);
@@ -118,13 +119,24 @@ function main() {
     }
   });
 
+  const shading = document.getElementById("shading");
+  let isShading = true;
+  shading.addEventListener("change", (event) => {
+    if (!event.target.checked) {
+      isShading = false;
+    }
+    else {
+      isShading = true;
+    }
+    gl.uniform1i(isShadingOn, isShading);
+  });
+
   // Model Radio Button Handler
   const models = document.querySelectorAll("input[name='model']");
   models.forEach((model) => {
     model.addEventListener("change", (event) => {
       modelName = event.target.value;
       parsedInput = parseObject("../../test/" + event.target.value + ".json");
-      console.log("../../test/" + event.target.value + ".json")
       modelType = parsedInput[0];
       modelSurfaces = parsedInput[1];
 
@@ -391,13 +403,7 @@ function main() {
 
       return transformedVertices
     }
-
-    // console.log(saveModel())
-
-    // console.log(getNewVertices())
-  
-    // console.log("aaa",modelType.vertices)
-
+    
     var btn = document.getElementById("save");
     btn.onclick = function(event) {
       saveModel();
