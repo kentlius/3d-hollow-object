@@ -352,14 +352,14 @@ function main() {
     //   translationMatrix(translation)
     // );
     const transformationMatrix = multiply(
+      translationMatrix(translation),
       multiply(
         multiply(
-          multiply(translationMatrix(translation), scaleMatrix(scale)),
-          xRotationMatrix(rotation[0])
+          multiply(xRotationMatrix(rotation[0]), yRotationMatrix(rotation[1])),
+          zRotationMatrix(rotation[2])
         ),
-        yRotationMatrix(rotation[1])
-      ),
-      zRotationMatrix(rotation[2])
+        scaleMatrix(scale)
+      )
     );
 
     function getNewVertices(){
@@ -446,7 +446,7 @@ function main() {
             translationMatrix([0, 0, viewRadius])
           )
         )
-      )
+      );
     }
 
     if (projectionType === "perspective") gl.uniform1f(perspective, 1.5);
